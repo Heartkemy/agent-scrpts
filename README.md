@@ -43,8 +43,11 @@ ascr self-test
 ascr tools
 printf '{"value":42}' | ascr run json-pick /value
 ascr run sha256 ./some-file.txt
+ascr run text-references references.json
 ascr test
 ```
+
+`text-references` accepts `{files: string[], needles: string[]}` and returns exact matches with file/line evidence. Missing matches are investigation candidates, not proof of dead code; callers must trace dynamic lookups separately. It performs no writes or model calls.
 
 `decide` exit 0 means the configured heuristic thresholds were met, **not proven correctness**. Exit 3 means review required; exit 1 means an error. Scripts can call HTTP directly or import `src/client.ts`; do not launch a CLI or an MCP server for each native API call.
 

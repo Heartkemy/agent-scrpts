@@ -1,4 +1,17 @@
 [
-  {"name":"json-pick","entry":"json-pick.ts","description":"Deterministic JSON Pointer selection from stdin; no model."},
-  {"name":"sha256","entry":"sha256.ts","description":"Deterministic streaming SHA-256 of one local file; no model."}
+  {
+    "name": "json-pick",
+    "entry": "json-pick.ts",
+    "description": "Deterministic JSON Pointer selection from stdin; no model."
+  },
+  {
+    "name": "sha256",
+    "entry": "sha256.ts",
+    "description": "Deterministic streaming SHA-256 of one local file; no model."
+  },
+  {
+    "name": "text-references",
+    "entry": "text-references.ts",
+    "description": "Find exact text references with file/line evidence. Missing matches require investigation; no model or writes."
+  }
 ]

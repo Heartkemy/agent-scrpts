@@ -1,0 +1,13 @@
+{
+  "name": "agent-scrpts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared deterministic TypeScript tools with local bounded decision inference",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "test": "node --experimental-strip-types --disable-warning=ExperimentalWarning --test tests/*.test.ts",
+    "start": "node --experimental-strip-types src/server.ts",
+    "doctor": "node --experimental-strip-types src/cli.ts doctor"
+  }
+}

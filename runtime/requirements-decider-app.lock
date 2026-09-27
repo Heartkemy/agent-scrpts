@@ -1,0 +1,2 @@
+# Mac adapter: dependencies are managed in requirements-decider.lock.
+decider-ai==1.5.0 --hash=sha256:f72af210ba442a40f7e80339419ea9aa811bec2d1bf4eafe63b392c3cb22d7cb

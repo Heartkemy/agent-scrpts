@@ -1,0 +1,8 @@
+# macOS inference subset. decider-ai is separately hash-pinned and installed --no-deps.
+# Do NOT install flash-linear-attention/Triton: those are CUDA dependencies, unused by MPS.
+torch==2.14.0
+transformers==5.17.0
+mlx==0.32.2
+numpy==1.26.4
+huggingface-hub>=0.34,<2
+jinja2>=3.1,<4

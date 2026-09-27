@@ -1,0 +1,9 @@
+{
+  "state": "J’ai été débité deux fois. Pouvez-vous rembourser le paiement en double ?",
+  "task": "customer request triage",
+  "language": "fr",
+  "questions": {
+    "department": {"type":"choice", "instructions":"Select the department responsible for this request.", "criteria":{"billing":"Payments, charges and refunds", "technical":"Software errors", "sales":"Pre-purchase questions"}},
+    "refund": {"type":"noul", "instructions":"Does the person explicitly ask for a refund?"}
+  }
+}

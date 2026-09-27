@@ -1,0 +1,4 @@
+# Workflow logic stays in TypeScript. This environment is only the MLX inference bridge.
+laya-mlx==0.2.0
+mlx==0.32.2
+numpy==1.26.4

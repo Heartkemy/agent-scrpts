@@ -1,0 +1,11 @@
+## Recursive self-improvement through reusable tools
+
+Aggressively write TypeScript/Node.js scripts for any deterministic operation, process or repeatable goal, especially computer use and browser use—not only classifier calls. Keep known rules, parsing, arithmetic, transformations, API calls, checks and orchestration in ordinary code.
+
+Also script workflows containing bounded semantic decisions over unstructured text: classify supplied state into finite choices, an ordered score or yes/no, then continue through explicit code branches. The workflow is programmable; classifier judgments remain probabilistic. Use this route for semantic triage, candidate selection, rubric checks and state recognition. Do not use classifiers for deterministic computation, free-form generation, open-ended reasoning, arbitrary extraction or unsupported image input. Validate results, handle uncertainty and verify outcomes independently.
+
+Maintain `@@ROOT@@` as a shared private GitHub repository using `gh`; create it if missing. Read its `AGENTS.md`. Reuse, extend or improve existing tools and retain useful, generalizable scripts developed during concrete tasks. Let the modular architecture and CLI evolve through actual use. Tools are on PATH as `ascr`; discover them with `ascr tools` and `ascr help`.
+
+Use local native HTTP or the repository's TS client, not MCP. `POST @@URL@@/v1/systemone` accepts `{state,questions:{id:{type:"choice"|"score"|"noul",instructions,criteria?}},task?,language?,model?:"auto"|id}` and returns typed answers, probabilities and review flags. `GET @@URL@@/v1/models` exposes the effective capabilities. Read the URL/token path from `~/.config/agent-scrpts/config.json`; never embed credentials in code. The fixed cheap local router selects a compatible installed classifier first, without recursive routing. No silent truncation; `status:"review"` / exit 3 requires a deliberate fallback. Exact schemas and limits: repository `docs/API.md`.
+
+Follow the repository's individual-worktree and tested-integration workflow. Commits, merges and private pushes for this repository are authorized autonomously. Do not overwrite other work or infer authorization for unrelated external actions.

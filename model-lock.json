@@ -1,0 +1,63 @@
+{
+  "format": 1,
+  "models": {
+    "laya-english": {
+      "repo": "aac6fef/laya-mlx",
+      "revision": "20aed815fc6acde75733882e7ec0e3f28aeb9717",
+      "sha256": {
+        "encoder/config.json": "bf3ab80598fdccf414855a2ce80f22859e4492d06ca8a62ddd1cfb63972f8979",
+        "manifest.json": "d8e254b51322fc0462a3cb384bde4d1b449baec9a716cbbc0d0aa99c0cb216b6",
+        "mlx_config.json": "c022368f128dc9b7f6478a9163c96e0406f1da6a7c6bae660ea8515b016ed7ef",
+        "model.safetensors": "b9c07bf14be2fa5c78a9193a3e6d840ac80e89e62fc40f425834c3d8a6eaa3de",
+        "rl_agent_config.json": "d96dc2cb39d6375e030ff48c9957088f3c52668f45c30c56504f4e801ed3ee62",
+        "tokenizer/tokenizer.json": "6c8aaa9a542084f2457eab775d4eeb51f92a70c0fd9de28d5edb0ddec3c08d30",
+        "tokenizer/tokenizer_config.json": "50044de60daaa73df97d262e15a40d4faf0160e7d742df64b377877a1320dd12",
+        "validation.json": "adc9a4baac1430b58cd8fdaf7c7587b380d4a91834ba405bbdeeabd9d35b5771"
+      },
+      "bytes": 846215883
+    },
+    "laya-multilingual": {
+      "repo": "aac6fef/laya-multilingual-mlx",
+      "revision": "f2b4faf51023039425946074e2cf1361d2db11d5",
+      "sha256": {
+        "encoder/config.json": "83f6916d13ef0f556ac461f28308dc2bffa7ebeadee8ec9e2db5812020ea5bb4",
+        "manifest.json": "deb2de8ec6b1520b74866249bda632f40501440cdac29fdd90af80a3c422c778",
+        "mlx_config.json": "20ec723e1365a268597cc7e8cd39495c5e2eb58311b925f8e8c165ec5855cc28",
+        "model.safetensors": "7fc5834af4d8fdfb268d272a9d1a66e5819a0daac98241651c4c888cc43adff1",
+        "rl_agent_config.json": "9a669a70961064c3c6cc76d2afb8bc5fb10dcd8349bb66e5f7b9b1afb74440d5",
+        "tokenizer/tokenizer.json": "609d8f4c067cd3950f88594c5a802616cea245823836ef5848ee4fc40aab5b6f",
+        "tokenizer/tokenizer_config.json": "6c6b2d8e3c84ce0e671c129cd6b374b235d6f9863042a5836358d00a89bbb5a1",
+        "validation.json": "f64ef4e455afb2dc3d183f2bf0f2edfded8297e5573334caf462c2d89dab7966"
+      },
+      "bytes": 678221960
+    },
+    "laya-typed": {
+      "repo": "aac6fef/laya-typed-decisions-mlx",
+      "revision": "f9e501c2080cc57c13d6887820329758f5351125",
+      "sha256": {
+        "encoder/config.json": "5268d24ad3b77c8151de5dcb0762ba4391619aad9ab0bda33e36fb083cfeae6d",
+        "manifest.json": "393f58c941c55ce29717f7550a75df78e0e8a412fc785cd9637f2728b72090f3",
+        "mlx_config.json": "fe0d126c46e70e28e47767801b15e3219280484ce298cab6aadcd339ca242cae",
+        "model.safetensors": "804ef8802b4cac7a67913b0cfb8448659e934a50284aaa867b98d7d9a6e7d1e0",
+        "rl_agent_config.json": "d99c800b818cb1a60734adba961c27abeaff2d142bb9fc473edb34b7de32fde9",
+        "tokenizer/tokenizer.json": "6c8aaa9a542084f2457eab775d4eeb51f92a70c0fd9de28d5edb0ddec3c08d30",
+        "tokenizer/tokenizer_config.json": "08d4cf3ac4dca381759441b85b91a6d40e688471dcd33d15d6649eb0a9a854d1",
+        "validation.json": "3b3c53564fd89f431252518733b4f70b856c1b911bcdf3a271d8ca1ec7a1b60c"
+      },
+      "bytes": 846216097
+    },
+    "decider-0.8b": {
+      "repo": "Mapika/decider-0.8b",
+      "revision": "a0a01d6f8135298f400a8c856b355793012ae971",
+      "sha256": {
+        "config.json": "3f56b6210db3c52e0bafb50da005eb52b6d340ab4ad980091879b397743675fc",
+        "decider_config.json": "a817fa20524b2c062753f59fd5fae02207f1eff4808b729db6e0aa8d1bc3cce2",
+        "generation_config.json": "62153eb6c69f2e1f426beaa8002b7186437e949c7588167085df14e10e9c0a73",
+        "model.safetensors": "6926f82ef7e9ea408ad881555204daa6bb694ca82509c4d1514b7be2e713563d",
+        "tokenizer.json": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523",
+        "tokenizer_config.json": "8671bed7c852ce9e661be94f179a7b4ffd091c2a65aea0363e5501c20318ee45"
+      },
+      "bytes": 1524820308
+    }
+  }
+}

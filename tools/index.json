@@ -1,0 +1,4 @@
+[
+  {"name":"json-pick","entry":"json-pick.ts","description":"Deterministic JSON Pointer selection from stdin; no model."},
+  {"name":"sha256","entry":"sha256.ts","description":"Deterministic streaming SHA-256 of one local file; no model."}
+]

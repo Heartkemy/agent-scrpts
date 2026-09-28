@@ -17,4 +17,5 @@ models/
 private/
 __pycache__/
 *.pyc
+.tmp/
 coverage/

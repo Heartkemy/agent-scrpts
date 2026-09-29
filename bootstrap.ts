@@ -91,6 +91,7 @@ function updateManaged(path:string,body:string,id:string,backupDir:string,kind:'
   atomic(path,next,existsSync(path)?lstatSync(path).mode&0o777:0o600);
 }
 const quote=(s:string)=>"'"+s.replaceAll("'","'\\''")+"'";
+export const cliWrapper=(root:string,configPath:string)=>`#!/bin/sh\n# agent-scrpts-managed\nexport ASCR_CONFIG=${quote(configPath)}\nexec node --experimental-strip-types --disable-warning=ExperimentalWarning ${quote(join(root,'src','cli.ts'))} "$@"\n`;
 async function freePort(start:number):Promise<number> {
   for(let p=start;p<start+30;p++) {
     const free=await new Promise<boolean>(resolve=>{const s=createServer();s.once('error',()=>resolve(false));s.listen(p,'127.0.0.1',()=>s.close(()=>resolve(true)));});
@@ -291,7 +292,7 @@ async function main():Promise<void> {
     await stage('CLI and global agent instructions',()=>{
       const bin=join(homedir(),'.local','bin','ascr'),backups=join(state,'backups');
       if(existsSync(bin))assert(!lstatSync(bin).isSymbolicLink()&&readFileSync(bin,'utf8').includes('agent-scrpts-managed'),'An unmanaged ascr command exists; it was not replaced.');
-      atomic(bin,`#!/bin/sh\n# agent-scrpts-managed\nexport ASCR_CONFIG=${quote(configPath)}\nexec ${quote(process.execPath)} --experimental-strip-types --disable-warning=ExperimentalWarning ${quote(join(root,'src','cli.ts'))} "$@"\n`,0o755);
+      atomic(bin,cliWrapper(root,configPath),0o755);
       const pathBody='case ":$PATH:" in\n  *":$HOME/.local/bin:"*) ;;\n  *) export PATH="$HOME/.local/bin:$PATH" ;;\nesac';
       const zdot=process.env.ZDOTDIR?expand(process.env.ZDOTDIR):homedir();
       for(const name of ['.zprofile','.zshrc'])updateManaged(join(zdot,name),pathBody,'agent-scrpts-path',backups,'shell');

@@ -1,5 +1,10 @@
 [
   {
+    "name": "classify-jsonl",
+    "entry": "classify-jsonl.ts",
+    "description": "Sequential local classification of JSONL {id,state} rows; preserves review results; no external actions."
+  },
+  {
     "name": "json-pick",
     "entry": "json-pick.ts",
     "description": "Deterministic JSON Pointer selection from stdin; no model."

@@ -23,5 +23,10 @@
     "name": "text-references",
     "entry": "text-references.ts",
     "description": "Find exact text references with file/line evidence. Missing matches require investigation; no model or writes."
+  },
+  {
+    "name": "macos-app-copies",
+    "entry": "macos-app-copies.ts",
+    "description": "Read-only macOS application inventory by exact bundle ID, with allocated bytes and protected paths; excludes nested helpers and symlinks."
   }
 ]

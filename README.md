@@ -45,6 +45,7 @@ printf '{"value":42}' | ascr run json-pick /value
 ascr run sha256 ./some-file.txt
 ascr run http-probe --user-agent Twitterbot/1.0 --body-chars 2000 https://example.com/robots.txt
 ascr run text-references references.json
+ascr run macos-app-copies --bundle-id com.example.app --keep /Applications/Example.app /Applications ~/Downloads
 ascr run classify-jsonl template.json rows.jsonl > results.jsonl
 ascr test
 ```

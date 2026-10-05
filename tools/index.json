@@ -1,5 +1,10 @@
 [
   {
+    "name": "project-disposables",
+    "entry": "project-disposables.ts",
+    "description": "Read-only allocated-size inventory of reinstallable project dependencies and caches; skips symlinks, runtimes, worktrees and protected paths."
+  },
+  {
     "name": "classify-jsonl",
     "entry": "classify-jsonl.ts",
     "description": "Sequential local classification of JSONL {id,state} rows; preserves review results; no external actions."

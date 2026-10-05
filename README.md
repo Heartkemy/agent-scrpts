@@ -43,6 +43,7 @@ ascr self-test
 ascr tools
 printf '{"value":42}' | ascr run json-pick /value
 ascr run sha256 ./some-file.txt
+ascr run sqlite-wal ./archived.sqlite-wal
 ascr run http-probe --user-agent Twitterbot/1.0 --body-chars 2000 https://example.com/robots.txt
 ascr run text-references references.json
 ascr run macos-app-copies --bundle-id com.example.app --keep /Applications/Example.app /Applications ~/Downloads
@@ -51,6 +52,8 @@ ascr test
 ```
 
 `text-references` accepts `{files: string[], needles: string[]}` and returns exact matches with file/line evidence. Missing matches are investigation candidates, not proof of dead code; callers must trace dynamic lookups separately. It performs no writes or model calls.
+
+`sqlite-wal` validates SQLite WAL salts and rolling checksums until the first invalid frame. Optional arguments `<base-db> <NEW-candidate-db>` create a separate forensic overlay including unfinished transaction pages. Inputs are never overwritten. The candidate may be malformed: preserve the original archive, independently validate SQLite integrity and extracted records, and never install the overlay as a live database. Trailing frames after the first invalid frame are excluded.
 
 `classify-jsonl` applies one request template (all fields except `state`) to JSONL rows `{id,state}` using the existing local client. IDs must be unique nonempty trimmed strings. The whole batch is validated before sequential inference; each stdout row preserves the full response and input ID. Exit 3 preserves all results when any need review; exit 1 stops on a fatal error and may leave earlier results in stdout. Inputs are never truncated. Keep private task data outside Git; independently review classifications before taking action. Run with `--help` for usage.
 

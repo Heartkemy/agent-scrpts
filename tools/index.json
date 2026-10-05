@@ -28,5 +28,10 @@
     "name": "macos-app-copies",
     "entry": "macos-app-copies.ts",
     "description": "Read-only macOS application inventory by exact bundle ID, with allocated bytes and protected paths; excludes nested helpers and symlinks."
+  },
+  {
+    "name": "sqlite-wal",
+    "entry": "sqlite-wal.ts",
+    "description": "Checksum-validated SQLite WAL scan and optional separate forensic overlay; includes uncommitted pages, never replaces originals."
   }
 ]

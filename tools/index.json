@@ -30,6 +30,11 @@
     "description": "Find exact text references with file/line evidence. Missing matches require investigation; no model or writes."
   },
   {
+    "name": "duplicate-patterns",
+    "entry": "duplicate-patterns.ts",
+    "description": "Read-only exact duplicate audit: jscpd blocks plus raw prompt, static string and CSS color candidates with file/line evidence."
+  },
+  {
     "name": "macos-app-copies",
     "entry": "macos-app-copies.ts",
     "description": "Read-only macOS application inventory by exact bundle ID, with allocated bytes and protected paths; excludes nested helpers and symlinks."

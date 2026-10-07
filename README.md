@@ -47,12 +47,15 @@ ascr run project-disposables --keep ./active-project ./projects
 ascr run sqlite-wal ./archived.sqlite-wal
 ascr run http-probe --user-agent Twitterbot/1.0 --body-chars 2000 https://example.com/robots.txt
 ascr run text-references references.json
+ascr run duplicate-patterns ./some-repository
 ascr run macos-app-copies --bundle-id com.example.app --keep /Applications/Example.app /Applications ~/Downloads
 ascr run classify-jsonl template.json rows.jsonl > results.jsonl
 ascr test
 ```
 
 `text-references` accepts `{files: string[], needles: string[]}` and returns exact matches with file/line evidence. Missing matches are investigation candidates, not proof of dead code; callers must trace dynamic lookups separately. It performs no writes or model calls.
+
+`duplicate-patterns` is a read-only candidate audit, not a blanket DRY verdict. It delegates strict multi-token block detection to version-qualified `jscpd@5.4.0`, and deterministically groups long static strings, raw Markdown/text blocks, and CSS hex colors that token scanners can miss. It skips dependencies, build output, local runtime artifacts, Git-ignored paths, likely secret paths and files over 1 MiB by default; suspicious values are redacted. Use `--exclude` for additional generated, fixture or intentional packaging copies. Output is capped per candidate by default (`--max-results` and `--max-occurrences`, with `0` meaning unlimited). Review candidates before extracting them or baselining a future CI gate. `--literals-only` skips the npm-backed clone engine.
 
 `sqlite-wal` validates SQLite WAL salts and rolling checksums until the first invalid frame. Optional arguments `<base-db> <NEW-candidate-db>` create a separate forensic overlay including unfinished transaction pages. Inputs are never overwritten. The candidate may be malformed: preserve the original archive, independently validate SQLite integrity and extracted records, and never install the overlay as a live database. Trailing frames after the first invalid frame are excluded.
 

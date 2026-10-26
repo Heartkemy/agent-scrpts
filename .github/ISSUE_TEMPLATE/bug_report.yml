@@ -1,0 +1,19 @@
+name: Bug report
+description: Report a reproducible, non-security problem
+body:
+  - type: markdown
+    attributes:
+      value: Do not include credentials, private task data, local paths, model weights, or security details. See SECURITY.md for vulnerabilities.
+  - type: input
+    id: version
+    attributes:
+      label: Node and operating-system version
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include the command, expected behavior, and actual behavior.
+    validations:
+      required: true

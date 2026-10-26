@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync, realpathSync, existsSync } from 'node:fs';
 import { resolve, join, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { spawnSync } from 'node:child_process';
 import { api, readConfig, errorObject, testRepository, run } from './support.ts';
@@ -8,6 +9,7 @@ import { AppError } from './protocol.ts';
 import { service } from './service.ts';
 import { newWorktree, integrate } from './git-tools.ts';
 const output = (v: unknown) => process.stdout.write(JSON.stringify(v, null, 2) + '\n');
+const sourceRoot = () => resolve(fileURLToPath(new URL('..', import.meta.url)));
 const HELP = `ascr — shared agent scripts, deterministic utilities and local typed decisions
 
   ascr decide --file request.json       Classify (use --file - for stdin)
@@ -32,6 +34,32 @@ The service URL/token path are in ~/.config/agent-scrpts/config.json.
 try {
   const [command = 'help', ...rest] = process.argv.slice(2);
   if (['help', '--help', '-h'].includes(command)) process.stdout.write(HELP);
+  else if (command === 'tools' || command === 'run') {
+    const tools = JSON.parse(readFileSync(join(sourceRoot(), 'tools', 'index.json'), 'utf8'));
+    if (command === 'tools') output(tools);
+    else {
+      const tool = tools.find((t: any) => t.name === rest[0]);
+      if (!tool) throw new AppError('UNKNOWN_TOOL', 'Unknown tool. Run ascr tools.');
+      const base = realpathSync(join(sourceRoot(), 'tools')), entry = realpathSync(resolve(base, tool.entry));
+      if (!entry.startsWith(base + sep) || !entry.endsWith('.ts')) throw new AppError('TOOL_SCOPE', 'Tool entry must be a TypeScript file inside tools/.');
+      const result = spawnSync(process.execPath, ['--experimental-strip-types', '--disable-warning=ExperimentalWarning', entry, ...rest.slice(1)], { stdio: 'inherit' });
+      if (result.error) throw result.error; process.exitCode = result.status ?? 1;
+    }
+  }
+  else if (command === 'test') {
+    let target = sourceRoot();
+    const cwdRoot = run('git', ['rev-parse', '--show-toplevel'], { allowFailure: true });
+    if (cwdRoot) {
+      const common = (path: string) => realpathSync(resolve(path, run('git', ['-C', path, 'rev-parse', '--git-common-dir'])));
+      if (common(cwdRoot) === common(target)) target = cwdRoot;
+    }
+    testRepository(target);
+  }
+  else if (command === 'worktree') {
+    if (rest[0] === 'new' && rest[1]) output(newWorktree(sourceRoot(), rest[1]));
+    else if (rest[0] === 'integrate' && rest[1]) output(integrate(sourceRoot(), rest[1]));
+    else throw new AppError('USAGE', 'Use worktree new <slug> or worktree integrate <path>.');
+  }
   else {
     const config = readConfig();
     if (command === 'decide' || command === 'classify' || command === 'route') {
@@ -62,30 +90,6 @@ try {
       }
       output({ results, note: 'Functional sanity checks, not an accuracy or calibration benchmark.' });
     } else if (command === 'service') output(service(rest[0] ?? 'status'));
-    else if (command === 'test') {
-      let target = config.root;
-      const cwdRoot = run('git', ['rev-parse', '--show-toplevel'], { allowFailure: true });
-      if (cwdRoot) {
-        const common = (path: string) => realpathSync(resolve(path, run('git', ['-C', path, 'rev-parse', '--git-common-dir'])));
-        if (common(cwdRoot) === common(config.root)) target = cwdRoot;
-      }
-      testRepository(target);
-    }
-    else if (command === 'tools' || command === 'run') {
-      const tools = JSON.parse(readFileSync(join(config.root, 'tools', 'index.json'), 'utf8'));
-      if (command === 'tools') output(tools);
-      else {
-        const tool = tools.find((t: any) => t.name === rest[0]);
-        if (!tool) throw new AppError('UNKNOWN_TOOL', 'Unknown tool. Run ascr tools.');
-        const base = realpathSync(join(config.root, 'tools')), entry = realpathSync(resolve(base, tool.entry));
-        if (!entry.startsWith(base + sep) || !entry.endsWith('.ts')) throw new AppError('TOOL_SCOPE', 'Tool entry must be a TypeScript file inside tools/.');
-        const result = spawnSync(process.execPath, ['--experimental-strip-types', '--disable-warning=ExperimentalWarning', entry, ...rest.slice(1)], { stdio: 'inherit' });
-        if (result.error) throw result.error; process.exitCode = result.status ?? 1;
-      }
-    } else if (command === 'worktree') {
-      if (rest[0] === 'new' && rest[1]) output(newWorktree(config.root, rest[1]));
-      else if (rest[0] === 'integrate' && rest[1]) output(integrate(config.root, rest[1]));
-      else throw new AppError('USAGE', 'Use worktree new <slug> or worktree integrate <path>.');
-    } else throw new AppError('USAGE', `Unknown command: ${command}. Run ascr help.`);
+    else throw new AppError('USAGE', `Unknown command: ${command}. Run ascr help.`);
   }
 } catch (e) { process.stderr.write(JSON.stringify({ error: errorObject(e) }, null, 2) + '\n'); process.exitCode = 1; }

@@ -53,7 +53,7 @@ def metadata(model):
         return TOKENIZERS[key]
     p = Path(model["path"])
     if not p.is_dir():
-        raise InputError("MODEL_MISSING", "The pinned model snapshot is missing. Rerun the bootstrap.")
+        raise InputError("MODEL_MISSING", "The pinned model snapshot is missing. Configure the local runtime with the required model files.")
     if model["family"] == "laya":
         from laya_mlx.tokenizer import Tokenizer
         cfg = json.loads((p / "rl_agent_config.json").read_text())

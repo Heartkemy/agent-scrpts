@@ -7,7 +7,7 @@ import { AppError, object } from './protocol.ts';
 import type { Config } from './protocol.ts';
 export const DEFAULT_CONFIG = join(homedir(), '.config', 'agent-scrpts', 'config.json');
 export function readConfig(path = process.env.ASCR_CONFIG || DEFAULT_CONFIG): Config {
-  if (!existsSync(path)) throw new AppError('NOT_INSTALLED', 'Run bootstrap.ts before using the installed service.');
+  if (!existsSync(path)) throw new AppError('NOT_INSTALLED', 'Configure a local runtime before using service or inference commands.');
   const config = JSON.parse(readFileSync(path, 'utf8')) as Config;
   if (config.version !== 1 || config.host !== '127.0.0.1' || !Number.isInteger(config.port) || config.port < 1024 || config.port > 65535 || !Array.isArray(config.models)) throw new AppError('BAD_CONFIG', 'Invalid local service configuration.');
   return config;

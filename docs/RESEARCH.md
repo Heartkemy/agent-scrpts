@@ -1,8 +1,8 @@
 # Model/runtime pre-research — 27 September 2026
 
-This is a source-based integration plan, not a benchmark run on your Mac. The installer performs actual structural inference checks and records cold/warm timings locally. Those tiny checks do not establish general accuracy or calibrated confidence.
+This is source-based integration research, not a benchmark run on your Mac. A local runtime can run structural inference checks and record cold/warm timings, but those tiny checks do not establish general accuracy or calibrated confidence.
 
-## Installed by default
+## Pinned local-runtime profile
 
 | Local ID | Weights | Native backend | Starter context |
 |---|---|---|---|
@@ -13,11 +13,11 @@ This is a source-based integration plan, not a benchmark run on your Mac. The in
 
 The independent Laya MLX port publishes English ModernBERT (~421M), multilingual mmBERT (~322M) and typed-decision (~421M) checkpoints. The fixed router uses multilingual to make non-English metadata usable without assuming the English model handles it. All three specialists are useful to compare, not presumed equally capable. The upstream project reports markedly different typed-decision performance between base and fine-tuned variants; deployment needs task-specific validation.
 
-Optional `--with-decider-2b` adds Mapika/decider-2b on Macs with at least 16 GiB RAM. `--mlx-only` installs only the three Laya checkpoints. Downloads are multiple GB; RAM residency is controlled separately from disk size. These choices are conservative starting points, not a guarantee of latency or compatibility on unknown hardware.
+An optional local profile can add Mapika/decider-2b on Macs with at least 16 GiB RAM, or use only the three Laya checkpoints. Downloads are multiple GB; RAM residency is controlled separately from disk size. These choices are conservative starting points, not a guarantee of latency or compatibility on unknown hardware.
 
-Decider also publishes larger 4B and 35B-A3B variants, including a CUDA-oriented NVFP4 variant and vision work. They are not default small-Mac installations. This scaffold intentionally serves only the verified text typed-decision API. No image capability is implied by membership in a model family.
+Decider also publishes larger 4B and 35B-A3B variants, including a CUDA-oriented NVFP4 variant and vision work. They are not default small-Mac installations. This project intentionally serves only the verified text typed-decision API. No image capability is implied by membership in a model family.
 
-Decider's package metadata includes `flash-linear-attention`. The selected MPS path does not use that CUDA/Triton runtime. Installation creates a separate environment, installs the pinned Mac dependency set, then the hash-verified decider-ai wheel with `--no-deps`. This is deliberate platform-specific dependency curation, not evidence that the unmodified full CUDA requirements work on macOS. Check the pinned source again when upgrading.
+Decider's package metadata includes `flash-linear-attention`. The selected MPS path does not use that CUDA/Triton runtime. A compatible local runtime should use a separate environment, the pinned Mac dependency set, and the hash-verified decider-ai wheel with `--no-deps`. This is deliberate platform-specific dependency curation, not evidence that the unmodified full CUDA requirements work on macOS. Check the pinned source again when upgrading.
 
 ## Other relevant open projects, not silently installed
 
@@ -55,7 +55,6 @@ MLX is a tensor/inference framework; oMLX is a server with particular supported 
 - https://docs.astral.sh/uv/guides/install-python/
 - https://docs.astral.sh/uv/pip/compile/
 - https://docs.brew.sh/Installation
-- https://cli.github.com/manual/gh_repo_create
 - https://developers.openai.com/codex/guides/agents-md/
 
-Package versions are fixed in requirements inputs. The first installation resolves transitive dependencies into hashed lockfiles and resolves immutable Hugging Face model revisions. Re-running reuses those locks and revisions. It is therefore repeatable after first resolution, **not a fully hermetic pre-resolved macOS build**. First-time installation, Homebrew and authentication still depend on external services and native approvals.
+Package versions are fixed in requirements inputs and checked-in lockfiles. They document the compatible runtime rather than providing a public installer. Any explicit local setup must resolve the pinned model revisions and keep its environments separate; it is therefore **not a fully hermetic pre-resolved macOS build**. Dependency and model retrieval still depend on external services and native approvals.

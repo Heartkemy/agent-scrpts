@@ -35,7 +35,7 @@ export function service(action: string): any {
   if (action === 'uninstall') { if (existsSync(path)) unlinkSync(path); return { status: 'startup-removed', repositoryPreserved: true }; }
   if (action === 'stop') return { status: 'stopped' };
   if (!['start', 'restart'].includes(action)) throw new AppError('USAGE', 'Use service start|stop|restart|status|uninstall.');
-  if (!existsSync(path)) throw new AppError('NOT_INSTALLED', 'No managed LaunchAgent exists. Rerun bootstrap.ts.');
+  if (!existsSync(path)) throw new AppError('NOT_INSTALLED', 'No managed LaunchAgent exists. Install one explicitly with a valid local configuration.');
   if (!run('/bin/launchctl', ['print', target], { allowFailure: true })) run('/bin/launchctl', ['bootstrap', domain, path]);
   run('/bin/launchctl', ['kickstart', '-k', target]);
   return { status: 'started' };

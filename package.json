@@ -3,9 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Shared deterministic TypeScript tools with local bounded decision inference",
+  "description": "Deterministic TypeScript CLI tools and an optional local typed-decision service",
   "engines": { "node": ">=22.18" },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heartkemy/agent-scrpts.git"
+  },
+  "bugs": { "url": "https://github.com/Heartkemy/agent-scrpts/issues" },
+  "homepage": "https://github.com/Heartkemy/agent-scrpts#readme",
+  "keywords": ["agent", "typescript", "automation", "classification"],
   "scripts": {
+    "ascr": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/cli.ts",
     "test": "node --experimental-strip-types --disable-warning=ExperimentalWarning --test tests/*.test.ts",
     "start": "node --experimental-strip-types src/server.ts",
     "doctor": "node --experimental-strip-types src/cli.ts doctor"

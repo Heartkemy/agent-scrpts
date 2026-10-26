@@ -2,7 +2,7 @@
 
 The starter implements one local API over upstream Laya and Decider Python inference methods. It is not an oMLX endpoint and is not an MCP server. Workflow code, routing, HTTP, CLI, caching and Git management are TypeScript. A small private JSONL subprocess bridge is needed because the verified native runtimes expose Python APIs, not a verified Node binding.
 
-Endpoint: `http://127.0.0.1:<port>` (normally 7331). Actual URL, model paths and token path: `~/.config/agent-scrpts/config.json`. Bearer token: separate mode-0600 local file. The API accepts local non-browser clients only: it rejects Origin headers and unexpected Host values, has no CORS and is not exposed on the network. Do not reverse-proxy it publicly. This does not protect against arbitrary code already running as your user.
+Endpoint: `http://127.0.0.1:<port>` (normally 7331). An explicitly configured local runtime reads its actual URL, model paths, and token path from `~/.config/agent-scrpts/config.json` or `ASCR_CONFIG`; this repository does not create that configuration. The bearer token is a separate mode-0600 local file. The API accepts local non-browser clients only: it rejects Origin headers and unexpected Host values, has no CORS and is not exposed on the network. Do not reverse-proxy it publicly. This does not protect against arbitrary code already running as your user.
 
 ## Operations
 
@@ -45,6 +45,8 @@ Top-level `status` is `ok` or `review`. `meta.routing` identifies classifier rou
 
 ## Native use from TypeScript
 
+For an already configured local runtime:
+
 ```typescript
 import { readFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
@@ -75,6 +77,6 @@ Hard limits are not a promise of good accuracy at their maximum. The wrapper acc
 
 No image/screenshot classification, free-text generation, arbitrary entity extraction, browser driver, browser login, tool execution or external mutation endpoint is supplied. For computer/browser use, provide compact extracted text or enumerated semantic candidates. Permissions remain the caller's responsibility.
 
-Queueing is serialized to avoid competing GPU loads. Workers are lazy and unload after inactivity. On lower-memory Macs, switching families evicts the previous model. Cold loads and first requests can be much slower than warm inference. A fixed router is not free: preflight tokenization, loading and switching have costs. Cache: at most 256 exact requests for five minutes, RAM only; `cache:false` disables it. No task payloads are written to logs or committed by this scaffold. Child-library stderr is discarded to avoid accidental private-data logging.
+Queueing is serialized to avoid competing GPU loads. Workers are lazy and unload after inactivity. On lower-memory Macs, switching families evicts the previous model. Cold loads and first requests can be much slower than warm inference. A fixed router is not free: preflight tokenization, loading and switching have costs. Cache: at most 256 exact requests for five minutes, RAM only; `cache:false` disables it. No task payloads are written to logs or committed by this runtime. Child-library stderr is discarded to avoid accidental private-data logging.
 
 HTTP failures include 400 malformed JSON, 401 auth/origin/host rejection, 413 byte limit, 415 content type, 422 incompatible input, 502 malformed native answers, 503 queue/backend unavailable, 504 timeout. The service terminates a timed-out worker. Review is a successful HTTP response, but CLI exit 3. Exit 1 means operational failure. Avoid blindly retrying irreversible workflows.
